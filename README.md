@@ -3,6 +3,12 @@
 **Portfolio project demonstrating the intersection of civil engineering
 fundamentals (structural dynamics, modal analysis) and data science
 (statistical anomaly detection), applied to a real bridge monitoring dataset.**
+Companion piece to a separate project,
+[wave-propagation-damage-reflection](https://github.com/Opeyemi-Bamidele/wave-propagation-damage-reflection):
+this project detects damage *statistically*, via shifts in modal
+frequencies; the companion project investigates the underlying *physical
+mechanism* — how a localized stiffness loss actually affects wave
+propagation, via impedance mismatch and reflection.
 
 ## Setup & running
 
@@ -179,3 +185,12 @@ matrix multiplication, `list.append()` returning `None` and overwriting the
 list it was called on) — these are noted here deliberately, since debugging
 one's own mistakes was as important to understanding the method as the
 final working code.
+
+## Related project
+[wave-propagation-damage-reflection](https://github.com/Opeyemi-Bamidele/wave-propagation-damage-reflection)
+— a finite-difference wave equation solver exploring the physical
+mechanism behind the frequency shifts this project detects: how a
+localized stiffness loss changes local wave speed, causing partial
+reflection at the damage boundary (impedance mismatch). Together, the two
+projects cover both the statistical detection side and the physical
+mechanism side of vibration-based structural health monitoring.
