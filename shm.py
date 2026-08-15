@@ -107,7 +107,6 @@ for i, ax in enumerate(axes.flat):
     ax.set_xlabel('Sample'); ax.set_ylabel('Frequency (Hz)')
     ax.set_title(titles[i])
     ax.legend(fontsize=8)
-fig.suptitle('Raw Modal Frequencies: Note the Downward Drift Across the Healthy Period', fontsize=11)
 plt.tight_layout()
 plt.savefig('figures/C_raw_frequency_drift.png', dpi=300)
 plt.show()
