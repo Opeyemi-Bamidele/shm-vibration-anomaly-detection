@@ -1,4 +1,4 @@
-# Import Libaries
+# Import libraries
 import scipy.io as sio
 import numpy as np
 import matplotlib.pyplot as plt
@@ -55,7 +55,7 @@ def mahalanobis_batch(X, mu, sigma_inv):
         D2[i] = diff @ sigma_inv @ diff
     return D2
 
-# ---------- Method 1: Fixed baseline ----------
+# Method 1: Fixed baseline 
 # Fixed baseline (single mu/Sigma from all training data)
 mu = X_train.mean(axis=1)
 Sigma_inv = np.linalg.inv(np.cov(X_train))
@@ -89,7 +89,7 @@ plt.tight_layout()
 plt.savefig('figures/B_fixed_baseline_mahalanobis.png', dpi=300)
 plt.show()
 
-# --- Quick summary stats ---
+# Quick summary stats
 false_alarms = (D2_val_fixed > threshold_99).sum()
 detected = (D2_damaged_fixed > threshold_99).sum()
 print(f"\nFalse alarms on validation (healthy) set: {false_alarms}/{len(D2_val_fixed)}")
@@ -111,7 +111,7 @@ plt.tight_layout()
 plt.savefig('figures/C_raw_frequency_drift.png', dpi=300)
 plt.show()
 
-# ---------- Method 2: Naive rolling window ----------
+# Method 2: Naive rolling window 
 # Naive rolling window (local mu/Sigma, updates every step)
 def rolling_mahalanobis(X, window_size=20):
     D2_values, valid_indices = [], []
@@ -134,7 +134,7 @@ D2_train_rol = D2_full_rol[train_mask]
 D2_val_rol = D2_full_rol[val_mask]
 D2_damaged_rol = D2_full_rol[damaged_mask]
 
-# --- Quick summary stats ---
+# Quick summary stats
 false_alarms_rol  = (D2_val_rol > threshold_99).sum()
 detected_rol = (D2_damaged_rol > threshold_99).sum()
 print(f"\nFalse alarms on validation (healthy) set: {false_alarms_rol}/{len(D2_val_rol)}")
@@ -170,7 +170,7 @@ plt.tight_layout()
 plt.savefig('figures/D_naive_rolling_collapse.png', dpi=300)
 plt.show()
 
-# ---------- Method 3: Clean-buffer rolling ----------
+# Method 3: Clean-buffer rolling
 # Clean-buffer rolling (local mu/Sigma, only updates on non-flagged samples)
 def clean_buffer_mahalanobis(X_train, X_rest, window_size=20, threshold=threshold_99):
     buffer = [X_train[:, i] for i in range(X_train.shape[1] - window_size, X_train.shape[1])]
@@ -198,13 +198,13 @@ D2_damaged_clean = D2_clean_full[48:]
 # training D2 not separately evaluated in this method -- use fixed-baseline train D2 for display)
 D2_train_clean = D2_train_fixed
 
-# --- Quick summary stats ---
+# Quick summary stats
 false_alarms_clean = (D2_val_clean > threshold_99).sum()
 detected_clean = (D2_damaged_clean > threshold_99).sum()
 print(f"\nFalse alarms on validation (healthy) set: {false_alarms_clean}/{len(D2_val_rol)}")
 print(f"Damaged samples correctly flagged: {detected_clean}/{len(D2_damaged_rol)}")
 
-# ---------- Method 4: Linear detrend ----------
+# Method 4: Linear detrend
 # Linear detrend (remove per-mode linear trend, then fixed Mahalanobis) 
 x_train_idx = np.arange(n_train)
 x_full_idx = np.arange(n_total)
@@ -223,7 +223,7 @@ D2_train_dt = mahalanobis_batch(X_train_dt, mu_dt, Sigma_inv_dt)
 D2_val_dt = mahalanobis_batch(X_val_dt, mu_dt, Sigma_inv_dt)
 D2_damaged_dt = mahalanobis_batch(X_damaged_dt, mu_dt, Sigma_inv_dt)
 
-# --- Quick summary stats ---
+# Quick summary stats
 false_alarms_dt = (D2_val_dt > threshold_99).sum()
 detected_dt = (D2_damaged_dt > threshold_99).sum()
 print(f"\nDETREND - False alarms (val): {false_alarms_dt}/{len(D2_val_dt)}")
