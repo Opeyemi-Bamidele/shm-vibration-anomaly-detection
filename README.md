@@ -57,6 +57,8 @@ and cannot see this relationship. Mahalanobis distance explicitly encodes
 it: a sample that breaks the normal Mode1-Mode2 relationship is flagged as
 unusual even if neither individual value looks extreme on its own.
 
+![mode1 vs mode2 correlation](figures/A_mode1_vs_mode2_correlation.png)
+
 ## Method 1 — Fixed-baseline Mahalanobis distance
 A single mean vector (μ) and covariance matrix (Σ) are estimated from 144
 training samples (75% of the healthy data). Every new sample's "distance"
@@ -76,6 +78,8 @@ baseline can't distinguish "drift" from "damage" — it just measures distance
 from one static average, inflating scores for later healthy samples purely
 due to environmental drift.
 
+![Raw Frequency Drift](figures/C_raw_frequency_drift.png)
+
 ## Method 2 — Naive rolling-window Mahalanobis distance
 To address the drift problem, μ and Σ are recomputed locally using only
 the 20 samples immediately preceding each point (true time order, train →
@@ -92,6 +96,8 @@ relative to this contaminated baseline, the detector effectively "forgets"
 that anything is wrong. `figures/D_naive_rolling_collapse.png` shows this
 directly: D² spikes on the very first damaged sample, then collapses to
 near-normal values within 1-2 samples and stays there.
+
+![Naive Rolling Collapse](figures/D_naive_rolling_collapse.png)
 
 ## Method 3 — Clean-buffer rolling Mahalanobis distance
 A fix for Method 2's contamination problem: the local buffer only updates
@@ -143,6 +149,8 @@ the drift in the other three.
 
 See `figures/E_all_methods_comparison.png` for a direct visual comparison of
 all four methods on the same sample timeline.
+
+![All Methods Comparison](figures/E_all_methods_comparison.png)
 
 ## Honest limitations
 - Small dataset (216 samples, single damage event) — results demonstrate
