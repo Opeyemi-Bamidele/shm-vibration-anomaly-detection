@@ -1,13 +1,10 @@
 # Vibration-Based Structural Health Monitoring: A Comparison of Four Anomaly-Detection Strategies
 
-**Portfolio project demonstrating the intersection of civil engineering
-fundamentals (structural dynamics, modal analysis) and data science
-(statistical anomaly detection), applied to a real bridge monitoring dataset.**
-Companion piece to a separate project,
+This is a companion piece to a separate project,
 [wave-propagation-damage-reflection](https://github.com/Opeyemi-Bamidele/wave-propagation-damage-reflection):
 this project detects damage *statistically*, via shifts in modal
 frequencies; the companion project investigates the underlying *physical
-mechanism* — how a localized stiffness loss actually affects wave
+mechanism* of how a localized stiffness loss actually affects wave
 propagation, via impedance mismatch and reflection.
 
 ## Setup & running
@@ -160,7 +157,7 @@ all four methods on the same sample timeline.
 - No environmental covariates (temperature, traffic) — the drift is inferred
   as temperature-driven by physical reasoning, not confirmed directly.
 - Linear detrending is a simplification; real environmental effects are
-  unlikely to be perfectly linear over time. 
+  unlikely to be perfectly linear over time.
 - The damage event here is severe enough (D² roughly 2–3× the threshold)
   that all methods except naive rolling detect it easily. A harder, more
   realistic test — progressive/graded damage — would better differentiate
@@ -190,7 +187,7 @@ translated into code. Several real bugs were hit and debugged along the way
 (row/column axis confusion when slicing, `array[:, :1]` vs `array[:, 0]`
 producing a column-vector instead of a flat vector and silently breaking a
 matrix multiplication, `list.append()` returning `None` and overwriting the
-list it was called on) — these are noted here deliberately, since debugging
+list it was called on), these are noted here deliberately, since debugging
 one's own mistakes was as important to understanding the method as the
 final working code.
 
